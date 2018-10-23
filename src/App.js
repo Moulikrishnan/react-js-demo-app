@@ -48,6 +48,10 @@ class App extends Component {
     };
   }
 
+  // componentWillReceiveProps(nextProps){
+  //   console.log(nextProps);
+  // }
+  
   _generateList() {
     return this.props.listData.map((row, i) => {
       return (
@@ -95,6 +99,7 @@ class App extends Component {
   }
 
   render() {
+    // console.log('###33R', new Date());
     const { classes } = this.props;
     return (
       <Grid container spacing={0} direction="column" alignItems="center" justify="center" >

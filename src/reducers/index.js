@@ -9,7 +9,7 @@ export function rootReducer(state = { list_data: [{ name: 'Moulikrishnans', crea
       return Object.assign({}, state, {
         list_data: oldState,
       });
-
+      
     case 'REMOVELIST':
       let updatedArray = [...state.list_data];
       updatedArray.splice(action.key, 1);
