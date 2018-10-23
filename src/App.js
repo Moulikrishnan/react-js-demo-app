@@ -9,6 +9,8 @@ import TextField from '@material-ui/core/TextField';
 import DeleteIcon from '@material-ui/icons/Delete';
 import { withStyles } from '@material-ui/core/styles';
 import Grid from '@material-ui/core/Grid';
+import { connect } from 'react-redux';
+import { addList, removeList } from './actions';
 
 const styles = {
 
@@ -21,7 +23,7 @@ const styles = {
     marginTop: '50px',
     borderRadius: '3px',
     padding: '30px',
-    boxShadow: '0px 0 5px 0px black',
+    boxShadow: '0 0 13px 0 #a5a2a2',
     minHeight: '400px',
     minWidth: '800px'
   },
@@ -38,16 +40,16 @@ const styles = {
 
 class App extends Component {
 
-  constructor() {
-    super();
+  constructor(props) {
+    super(props);
     this.state = {
       entered_name: '',
-      list_array: [{ name: 'Moulikrishnan', created_on: '12/09/2018, 09:00:00' }],
+      list_array: this.props.listData,
     };
   }
 
   _generateList() {
-    return this.state.list_array.map((row, i) => {
+    return this.props.listData.map((row, i) => {
       return (
         <TableRow key={i}>
           <TableCell component="th" scope="row">
@@ -67,14 +69,12 @@ class App extends Component {
   }
 
   _removeItem(key) {
-    this.setState({
-      list_array: this.state.list_array.filter((_, i) => i !== key)
-    });
+    this.props.removeList(key);
   }
 
   _addItem(name) {
-    this.state.list_array.push({ name: name, created_on: new Date().toLocaleString() });
-    this.setState({ list_array: this.state.list_array, entered_name: '' });
+    let newData = [{ name: name, created_on: new Date().toLocaleString() }];
+    this.props.addList(newData);
   }
 
   _addList(classes) {
@@ -122,4 +122,14 @@ class App extends Component {
     );
   }
 }
-export default withStyles(styles)(App);
+App = withStyles(styles)(App);
+
+const mapStateToProps = (state) => {
+  return {
+    listData: state.list_data
+  }
+}
+
+const mapDispatchToProps = { addList, removeList };
+
+export default connect(mapStateToProps, mapDispatchToProps)(App)
