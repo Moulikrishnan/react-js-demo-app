@@ -12,11 +12,10 @@ import Grid from '@material-ui/core/Grid';
 import { connect } from 'react-redux';
 import { addList, removeList } from './actions';
 
-function Greet(props) {
+function Greet() {
   const [name, setName] = useState('Hook State');
   return (
     <div>
-      {name}
       <input value={name} onChange={handleChange} />
     </div>
   )
@@ -62,10 +61,6 @@ class App extends Component {
       list_array: this.props.listData,
     };
   }
-
-  // componentWillReceiveProps(nextProps){
-  //   console.log(nextProps);
-  // }
 
   _generateList() {
     return this.props.listData.map((row, i) => {
@@ -119,6 +114,7 @@ class App extends Component {
     return (
       <Grid container spacing={0} direction="column" alignItems="center" justify="center" >
         <div className={classes.app}>
+        <Greet />
           {this._addList(classes)}
           {this.state.list_array.length > 0 ?
             <Table className={classes.table}>
@@ -138,7 +134,6 @@ class App extends Component {
             <div className={classes.nodatadiv}>No data available..!!</div>
           }
         </div>
-        <Greet />
       </Grid>
     );
   }
